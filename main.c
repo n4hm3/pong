@@ -4,6 +4,18 @@
 #include <stdio.h>
 #include "raylib.h"
 
+
+void drawScore(int scoreOne, int scoreTwo){
+    char scoreOneString [20];
+    char scoreTwoString [20];
+
+    sprintf(scoreOneString, "%d", scoreOne);
+    sprintf(scoreTwoString, "%d", scoreTwo);
+
+    DrawText(scoreOneString, 250 ,10 , 20, LIGHTGRAY);
+    DrawText(scoreTwoString, 350 ,10 , 20, LIGHTGRAY);
+}
+
 int main(void){
     printf("Hellow");
     // setting constants
@@ -46,6 +58,8 @@ int main(void){
     bool leftGoal;
     bool rightGoal;
 
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
 
 
     while(!WindowShouldClose()){
@@ -67,36 +81,38 @@ int main(void){
 
         BeginDrawing();
             ClearBackground(BLACK);
+
+
             DrawText("HELLOW",190 ,200 , 20, LIGHTGRAY);
+            drawScore(playerOneScore, playerTwoScore);
+
             DrawCircle(ballPosition.x, ballPosition.y, radius, ballColor);
 
             DrawRectangle(playerOne.x, playerOne.y, playerOne.width, playerOne.height, playerOneColor);
             DrawRectangle(playerTwo.x, playerTwo.y, paddleWidth, paddleHeight, playerTwoColor);
 
             if (topCollision){
-                DrawText("HIT TOP",300, 300 , 20, LIGHTGRAY);
                 velocity.y *= -1;
             }
             if (bottomCollision){
-                DrawText("HIT bottom",300, 300 , 20, LIGHTGRAY);
                 velocity.y *= -1;
             }
             if (leftGoal){
-                DrawText("P2 GOALLL",300, 300 , 20, LIGHTGRAY);
                 ballPosition.x = 300;
                 ballPosition.y = 300;
+                playerTwoScore++;
             }
             if (rightGoal){
-                DrawText("P1 GOALLLL",300, 300 , 20, LIGHTGRAY);
                 ballPosition.x = 300;
                 ballPosition.y = 300;
-
+                playerOneScore++;
             }
 
 
             if (collisionOne || collisionTwo) {
                 playerOneColor.r = 255;
                 velocity.x *= -1;
+                velocity.y *= -1;
             }
             else playerOneColor.r = 100;
 
