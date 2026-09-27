@@ -15,6 +15,7 @@ int main(void){
     Vector2 bottomLeft = {0, screenHeight};
     Vector2 bottomRight = {screenWidth, screenHeight};
 
+
     // Vector2 bottom = {screenHeight, screenWidth+screenWidth};
 
     InitWindow(screenWidth, screenHeight, "raylib sandbox");
@@ -25,7 +26,7 @@ int main(void){
     const int paddleHeight = 90;
     const int playerSpeed = 4;
 
-    Vector2 velocity = {0,-50};
+    Vector2 velocity = {-5,-10};
 
 
     Vector2 ballPosition = {300, 300};
@@ -42,6 +43,8 @@ int main(void){
     bool collisionTwo;
     bool topCollision;
     bool bottomCollision;
+    bool leftGoal;
+    bool rightGoal;
 
 
 
@@ -57,6 +60,9 @@ int main(void){
         collisionTwo = CheckCollisionCircleRec(ballPosition, radius, playerTwo);
         topCollision =  CheckCollisionCircleLine(ballPosition, radius, topLeft, topRight);
         bottomCollision =  CheckCollisionCircleLine(ballPosition, radius, bottomLeft, bottomRight);
+
+        leftGoal = CheckCollisionCircleLine(ballPosition, radius, topLeft, bottomLeft);
+        rightGoal = CheckCollisionCircleLine(ballPosition, radius, topRight, bottomRight);
 
 
         BeginDrawing();
@@ -74,6 +80,17 @@ int main(void){
             if (bottomCollision){
                 DrawText("HIT bottom",300, 300 , 20, LIGHTGRAY);
                 velocity.y *= -1;
+            }
+            if (leftGoal){
+                DrawText("P2 GOALLL",300, 300 , 20, LIGHTGRAY);
+                ballPosition.x = 300;
+                ballPosition.y = 300;
+            }
+            if (rightGoal){
+                DrawText("P1 GOALLLL",300, 300 , 20, LIGHTGRAY);
+                ballPosition.x = 300;
+                ballPosition.y = 300;
+
             }
 
 
